@@ -1,3 +1,6 @@
+#/usr/bin/env python3
+# Tells Unix operating systems to run with Python3 when it gets executed
+
 import pygame, sys, time, random, colorsys, math
 from pygame.math import Vector2
 from pygame.locals import *
