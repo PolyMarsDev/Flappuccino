@@ -1,5 +1,6 @@
 import pygame
 
+
 class Player:
     position = pygame.Vector2()
     position.xy = 295, 100
