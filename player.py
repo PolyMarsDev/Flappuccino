@@ -1,11 +1,12 @@
 import pygame
 
 class Player:
-    position = pygame.Vector2()
-    position.xy = 295, 100
-    velocity = pygame.Vector2()
-    velocity.xy = 3, 0
-    acceleration = 0.1
-    rightSprite = pygame.image.load('data/gfx/player.png')
-    leftSprite = pygame.transform.flip(rightSprite, True, False)
-    currentSprite = rightSprite
+    def __init__(self, BASE_PATH):
+        self.position = pygame.Vector2()
+        self.position.xy = 295, 100
+        self.velocity = pygame.Vector2()
+        self.velocity.xy = 3, 0
+        self.acceleration = 0.1
+        self.rightSprite = pygame.image.load(BASE_PATH + '/data/gfx/player.png')
+        self.leftSprite = pygame.transform.flip(self.rightSprite, True, False)
+        self.currentSprite = self.rightSprite

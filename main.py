@@ -1,4 +1,5 @@
 import pygame, sys, time, random, colorsys, math
+from os.path import abspath, dirname
 from pygame.math import Vector2
 from pygame.locals import *
 from player import Player
@@ -12,50 +13,52 @@ from utils import checkCollisions
 def main():
     pygame.init()
     # set the display
+    BASE_PATH = abspath(dirname(__file__))
     DISPLAY=pygame.display.set_mode((640,480),0,32)
     pygame.display.set_caption('Flappuccino')
-    pygame.display.set_icon(Bean().sprite)
+    pygame.display.set_icon(Bean(BASE_PATH).sprite)
     # get fonts
-    font = pygame.font.Font('data/fonts/font.otf', 100)
-    font_small = pygame.font.Font('data/fonts/font.otf', 32)
-    font_20 = pygame.font.Font('data/fonts/font.otf', 20)
+    FONT = '/data/fonts/font.otf'
+    font = pygame.font.Font(BASE_PATH + FONT, 100)
+    font_small = pygame.font.Font(BASE_PATH + FONT, 32)
+    font_20 = pygame.font.Font(BASE_PATH + FONT, 20)
     # get some images
-    shop = pygame.image.load('data/gfx/shop.png')
-    shop_bg = pygame.image.load('data/gfx/shop_bg.png')
-    retry_button = pygame.image.load('data/gfx/retry_button.png')
-    logo = pygame.image.load('data/gfx/logo.png')
-    title_bg = pygame.image.load('data/gfx/bg.png')
+    shop = pygame.image.load(BASE_PATH + '/data/gfx/shop.png')
+    shop_bg = pygame.image.load(BASE_PATH + '/data/gfx/shop_bg.png')
+    retry_button = pygame.image.load(BASE_PATH + '/data/gfx/retry_button.png')
+    logo = pygame.image.load(BASE_PATH + '/data/gfx/logo.png')
+    title_bg = pygame.image.load(BASE_PATH + '/data/gfx/bg.png')
     title_bg.fill((255, 30.599999999999998, 0.0), special_flags=pygame.BLEND_ADD)
-    shadow = pygame.image.load('data/gfx/shadow.png')
+    shadow = pygame.image.load(BASE_PATH + '/data/gfx/shadow.png')
     # get sounds
-    flapfx = pygame.mixer.Sound("data/sfx/flap.wav")
-    upgradefx = pygame.mixer.Sound("data/sfx/upgrade.wav")
-    beanfx = pygame.mixer.Sound("data/sfx/bean.wav")
-    deadfx = pygame.mixer.Sound("data/sfx/dead.wav")
+    flapfx = pygame.mixer.Sound(BASE_PATH + "/data/sfx/flap.wav")
+    upgradefx = pygame.mixer.Sound(BASE_PATH + "/data/sfx/upgrade.wav")
+    beanfx = pygame.mixer.Sound(BASE_PATH + "/data/sfx/bean.wav")
+    deadfx = pygame.mixer.Sound(BASE_PATH + "/data/sfx/dead.wav")
     # colors
     WHITE=(255,255,255) # constant
     # variables
     rotOffset = -5
     # creating a new object player
-    player = Player()
+    player = Player(BASE_PATH)
     beans = []
     buttons = []
     # adding three buttons
-    for i in range(3): buttons.append(Button())
+    for i in range(3): buttons.append(Button(BASE_PATH))
     # now simply loading images based off of indexes in the list
-    buttons[0].typeIndicatorSprite = pygame.image.load('data/gfx/flap_indicator.png')
+    buttons[0].typeIndicatorSprite = pygame.image.load(BASE_PATH + '/data/gfx/flap_indicator.png')
     buttons[0].price = 5   
-    buttons[1].typeIndicatorSprite = pygame.image.load('data/gfx/speed_indicator.png')
+    buttons[1].typeIndicatorSprite = pygame.image.load(BASE_PATH + '/data/gfx/speed_indicator.png')
     buttons[1].price = 5 
-    buttons[2].typeIndicatorSprite = pygame.image.load('data/gfx/beanup_indicator.png')
+    buttons[2].typeIndicatorSprite = pygame.image.load(BASE_PATH + '/data/gfx/beanup_indicator.png')
     buttons[2].price = 30
     # getting 5 beans
-    for i in range(5): beans.append(Bean())
+    for i in range(5): beans.append(Bean(BASE_PATH))
     # now looping through the beans list
     for bean in beans:
         bean.position.xy = random.randrange(0, DISPLAY.get_width() - bean.sprite.get_width()), beans.index(bean)*-200 - player.position.y
     # creating a list of backgrounds, with each index being an object
-    bg = [Background(), Background(), Background()]
+    bg = [Background(BASE_PATH), Background(BASE_PATH), Background(BASE_PATH)]
     # some variables that we need
     beanCount = 0
     startingHeight = player.position.y
@@ -251,7 +254,7 @@ def main():
             flapForce = 3
             beanMultiplier = 5
             buttons = []
-            for i in range(3): buttons.append(Button())
+            for i in range(3): buttons.append(Button(BASE_PATH))
             buttons[0].typeIndicatorSprite = pygame.image.load('data/gfx/flap_indicator.png')
             buttons[0].price = 5   
             buttons[1].typeIndicatorSprite = pygame.image.load('data/gfx/speed_indicator.png')
@@ -259,7 +262,7 @@ def main():
             buttons[2].typeIndicatorSprite = pygame.image.load('data/gfx/beanup_indicator.png')
             buttons[2].price = 30
             beans = []
-            for i in range(5): beans.append(Bean())
+            for i in range(5): beans.append(Bean(BASE_PATH))
             for bean in beans:
                 bean.position.xy = random.randrange(0, DISPLAY.get_width() - bean.sprite.get_width()), beans.index(bean)*-200 - player.position.y
             pygame.mixer.Sound.play(upgradefx)
