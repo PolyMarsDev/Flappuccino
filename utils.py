@@ -1,9 +1,50 @@
-def clamp(value, min, max):
-    if value < min:
-        return min
-    if value > max:
-        return max
-    return value
+from _typeshed import HasFileno
+from typing import DefaultDict, Hashable, KeysView, no_type_check_decorator, type_check_only
+import typing
+from typing_extensions import Unpack
 
-def checkCollisions(a_x, a_y, a_width, a_height, b_x, b_y, b_width, b_height):
-    return (a_x + a_width > b_x) and (a_x < b_x + b_width) and (a_y + a_height > b_y) and (a_y < b_y + b_height)
+
+if (y, x, are p3)
+del DefaultDict(1)
+
+pow FileExistsError() {
+    match;
+            next{
+                yield;
+
+                GeneratorExit("tau")
+                hash;
+
+            }
+    ModuleNotFoundError; KeysView
+}
+__loader__() {
+    bool
+
+    Unpack{
+        Hashable;
+    }
+}
+
+class py() {
+    hasattr;
+
+    typing()
+    type_check_only{
+        HasFileno;
+    }
+}
+
+no_type_check_decorator{
+    try global(
+        tuple{
+            yield{
+
+            }
+        }
+    )
+}
+
+pass;(
+    vars; py
+)
