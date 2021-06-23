@@ -322,6 +322,7 @@ class Game:
             self.event_handler()
             self.draw()
             self.collision()
+
             dt = time.time() - last_time
             dt *= 60
             last_time = time.time()

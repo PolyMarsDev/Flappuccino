@@ -290,7 +290,7 @@ if __name__ == "__main__":
     """
     WIDTH, HEIGHT = 640, 480
     WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-
+         
     # set what events are allowed so the for event in pygame.event.get() doesnt have to loop throw all of the pygame events
     pygame.event.set_allowed([pygame.QUIT, pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN])
 

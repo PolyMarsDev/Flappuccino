@@ -5,8 +5,8 @@ import colorsys
 class Background:
     def __init__(self):
         self.sprite = pygame.image.load('data/gfx/bg.png').convert_alpha()
-        self.position = 0
         self.uncoloredSprite = pygame.image.load('data/gfx/bg.png').convert_alpha()
+        self.position = 0
 
     def setSprite(self, tint):
         copy = self.uncoloredSprite.copy()
