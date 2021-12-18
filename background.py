@@ -1,4 +1,4 @@
-import pygame
+import pygame, colorsy
 class Background:
     def __init__(self):
         self.sprite = pygame.image.load('data/gfx/bg.png')

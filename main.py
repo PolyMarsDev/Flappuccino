@@ -1,12 +1,29 @@
+#Copyright (C) 2021  polymars
+#
+#This program is free software: you can redistribute it and/or modify 
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+
+#You should have received a copy of the GNU General Public License
+#along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#We import the required modules
 import pygame, sys, time, random, colorsys, math
 from pygame.math import Vector2
 from pygame.locals import *
-from .player import Player
-from .background import Background
-from .button import Button
-from .bean import Bean
-from .utils import clamp
-from .utils import checkCollisions
+#Import external classes
+from player import Player
+from background import Background
+from button import Button
+from bean import Bean
+from utils import clamp
+from utils import checkCollisions
 
 
 def main():
