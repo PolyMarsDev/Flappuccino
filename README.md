@@ -23,5 +23,37 @@ Same as windows.
 
 Ensure ``main.py`` is in the same directory as ``./data`` and execute  ``python main.py``.
 
+### Running from source on unix like systems
+
+**Note:** this project was build on windows, that use codification CF-LF however unix systems uses only LF 
+for run from source is necesary install dos2unix and convert the file main.py
+
+1. Mac Os (Using homebrew)
+```bash
+brew install dos2unix
+
+#after install convert 
+dos2unix main.py
+
+#run
+./main.py
+```
+
+2. Linux (this may change depending of distribution)
+```bash
+#debian/ubuntu based distros
+sudo apt install dos2unix
+
+#arch based distros
+sudo pacman -Syu dos2unix
+
+#after install 
+dos2unix main.py
+
+#run
+./main.py
+```
+
+
 ## Contributing
 Pull requests are welcome! For major refactors, please open an issue first to discuss what you would like to improve. Feel free to create a fork of this repository and use the code for any noncommercial purposes.
