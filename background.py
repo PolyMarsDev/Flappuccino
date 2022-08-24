@@ -1,4 +1,7 @@
 import pygame
+
+# Added colorsys
+import colorsys
 class Background:
     def __init__(self):
         self.sprite = pygame.image.load('data/gfx/bg.png')

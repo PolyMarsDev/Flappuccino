@@ -1,12 +1,11 @@
 import pygame, sys, time, random, colorsys, math
-from pygame.math import Vector2
 from pygame.locals import *
-from .player import Player
-from .background import Background
-from .button import Button
-from .bean import Bean
-from .utils import clamp
-from .utils import checkCollisions
+from player import Player
+from background import Background
+from button import Button
+from bean import Bean
+from utils import clamp
+from utils import checkCollisions
 
 
 def main():
@@ -64,8 +63,8 @@ def main():
     flapForce = 3
     beanMultiplier = 5
     dead = False
-    # we need the framerate and then the time
-    framerate = 60
+
+
     last_time = time.time()
     splashScreenTimer = 0
     #splash screen
@@ -105,7 +104,6 @@ def main():
         mouseX,mouseY = pygame.mouse.get_pos()  
         # getting the keys pressed
         clicked = False
-        keys = pygame.key.get_pressed()
         # checking events
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -141,7 +139,6 @@ def main():
 
         jump = False
         clicked = False
-        keys = pygame.key.get_pressed()
         # get events
         for event in pygame.event.get():
             if event.type==pygame.KEYDOWN and event.key==K_SPACE:
@@ -235,7 +232,6 @@ def main():
                     if (buttons.index(button) == 1):
                         player.velocity.x *= 1.5
                     if (buttons.index(button) == 2):
-                        oldBeanMultipler = beanMultiplier
                         beanMultiplier += 10
                         for i in range(beanMultiplier):
                             beans.append(Bean())
@@ -251,7 +247,7 @@ def main():
             flapForce = 3
             beanMultiplier = 5
             buttons = []
-            for i in range(3): buttons.append(Button())
+            for _ in range(3): buttons.append(Button())
             buttons[0].typeIndicatorSprite = pygame.image.load('data/gfx/flap_indicator.png')
             buttons[0].price = 5   
             buttons[1].typeIndicatorSprite = pygame.image.load('data/gfx/speed_indicator.png')
@@ -259,7 +255,7 @@ def main():
             buttons[2].typeIndicatorSprite = pygame.image.load('data/gfx/beanup_indicator.png')
             buttons[2].price = 30
             beans = []
-            for i in range(5): beans.append(Bean())
+            for _ in range(5): beans.append(Bean())
             for bean in beans:
                 bean.position.xy = random.randrange(0, DISPLAY.get_width() - bean.sprite.get_width()), beans.index(bean)*-200 - player.position.y
             pygame.mixer.Sound.play(upgradefx)
