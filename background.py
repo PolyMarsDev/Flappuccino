@@ -1,3 +1,4 @@
+import colorsys
 import pygame
 class Background:
     def __init__(self):
