@@ -1,9 +1,10 @@
 # Flappuccino
 
-Flappuccino is a game created in 48 hours for the [PyGame Community New Years Jam](https://itch.io/jam/pygame-community-jam) using Python with [Pygame](https://www.pygame.org). 
+Flappuccino is a game created in 48 hours for the [PyGame Community New Years Jam](https://itch.io/jam/pygame-community-jam) using Python with [Pygame](https://www.pygame.org).
+
 ## Screenshots
 
-![](https://img.itch.zone/aW1hZ2UvODg3MDQ0LzUwMDQzOTkuZ2lm/original/vd0wHu.gif) 
+![](https://img.itch.zone/aW1hZ2UvODg3MDQ0LzUwMDQzOTkuZ2lm/original/vd0wHu.gif)
 
 ## Background
 
@@ -17,15 +18,16 @@ A Windows build of the game is available [here](https://polymars.itch.io/flappuc
 
 ### Running from source
 
-Grab the latest release of [Python](https://www.python.org/downloads/) **and** install [Pygame](https://www.pygame.org/wiki/GettingStarted) by executing ``pip install pygame``.
+Grab the latest release of [Python](https://www.python.org/downloads/) **and** install [Pygame](https://www.pygame.org/wiki/GettingStarted) by executing `pip install pygame`.
 
-**Note:** If the ``pip install pygame`` did not work for you, then try this:
+**Note:** If the `pip install pygame` did not work for you, then try this:
+
 1. Windows and Linux:
-``python -m pip install pygame``
-2. Mac: 
-``python3 -m pip install pygame``
+   `python -m pip install pygame`
+2. Mac:
+   `python3 -m pip install pygame`
 
-Ensure ``main.py`` is in the same directory as ``./data`` and execute  ``python main.py``.
+Ensure `main.py` is in the same directory as `./data` and execute `python main.py`.
 
 ## Contributing
 
