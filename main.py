@@ -1,13 +1,19 @@
-import pygame, sys, time, random, colorsys, math
 from os.path import abspath, dirname
-from pygame.math import Vector2
+
+import colorsys
+import math
+import pygame
+import random
+import sys
+import time
 from pygame.locals import *
-from player import Player
+
 from background import Background
-from button import Button
 from bean import Bean
-from utils import clamp
+from button import Button
+from player import Player
 from utils import checkCollisions
+from utils import clamp
 
 
 def main():
@@ -360,7 +366,7 @@ def main():
                         oldBeanMultipler = beanMultiplier
                         beanMultiplier += 10
                         for i in range(beanMultiplier):
-                            beans.append(Bean())
+                            beans.append(Bean(BASE_PATH))
                             beans[-1].position.xy = (
                                 random.randrange(
                                     0,

@@ -1,4 +1,5 @@
-import pygame, colorsys
+import colorsys
+import pygame
 
 
 class Background:
