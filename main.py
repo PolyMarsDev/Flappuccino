@@ -1,4 +1,4 @@
-import pygame, sys, time, random, colorsys, math
+import pygame, sys, time, random, colorsys, math, asyncio
 from pygame.math import Vector2
 from pygame.locals import *
 from player import Player
@@ -9,7 +9,7 @@ from utils import clamp
 from utils import checkCollisions
 
 
-def main():
+async def main():
     pygame.init()
     # set the display
     DISPLAY=pygame.display.set_mode((640,480),0,32)
@@ -28,10 +28,15 @@ def main():
     title_bg.fill((255, 30.599999999999998, 0.0), special_flags=pygame.BLEND_ADD)
     shadow = pygame.image.load('data/gfx/shadow.png')
     # get sounds
-    flapfx = pygame.mixer.Sound("data/sfx/flap.wav")
-    upgradefx = pygame.mixer.Sound("data/sfx/upgrade.wav")
-    beanfx = pygame.mixer.Sound("data/sfx/bean.wav")
-    deadfx = pygame.mixer.Sound("data/sfx/dead.wav")
+        # sounds
+    if 'win' in sys.platform:
+        soundExt = '.wav'
+    else:
+        soundExt = '.ogg'
+    flapfx = pygame.mixer.Sound("data/sfx/flap" + soundExt)
+    upgradefx = pygame.mixer.Sound("data/sfx/upgrade" + soundExt)
+    beanfx = pygame.mixer.Sound("data/sfx/bean" + soundExt)
+    deadfx = pygame.mixer.Sound("data/sfx/dead" + soundExt)
     # colors
     WHITE=(255,255,255) # constant
     # variables
@@ -91,6 +96,7 @@ def main():
             
         # update display
         pygame.display.update()
+        await asyncio.sleep(0)
         # wait for 10 seconds
         pygame.time.delay(10)
     
@@ -129,6 +135,7 @@ def main():
         DISPLAY.blit(startMessage, (DISPLAY.get_width()/2 - startMessage.get_width()/2, 292))
 
         pygame.display.update()
+        await asyncio.sleep(0)
         pygame.time.delay(10)
 
     # the main game loop
@@ -271,7 +278,8 @@ def main():
         bg[2].position = bg[0].position - DISPLAY.get_height()
         
         pygame.display.update()
+        await asyncio.sleep(0)
         pygame.time.delay(10)
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
