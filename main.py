@@ -27,12 +27,14 @@ async def main():
     title_bg = pygame.image.load('data/gfx/bg.png')
     title_bg.fill((255, 30.599999999999998, 0.0), special_flags=pygame.BLEND_ADD)
     shadow = pygame.image.load('data/gfx/shadow.png')
+
     # get sounds
         # sounds
-    if 'win' in sys.platform:
+    if ['win','linux'].__contains__(sys.platform):
         soundExt = '.wav'
     else:
         soundExt = '.ogg'
+
     flapfx = pygame.mixer.Sound("data/sfx/flap" + soundExt)
     upgradefx = pygame.mixer.Sound("data/sfx/upgrade" + soundExt)
     beanfx = pygame.mixer.Sound("data/sfx/bean" + soundExt)
