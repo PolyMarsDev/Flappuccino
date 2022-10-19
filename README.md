@@ -20,6 +20,14 @@ Grab the latest release of Python from [here](https://www.python.org/downloads/)
 ``python3 -m pip install pygame``
 3. Linux:
 Same as windows.
+4. Browser
+```sh
+pip install pygbag
+cd ..
+pygbag Flappuccino
+```
+Then 
+http://localhost:8000
 
 Ensure ``main.py`` is in the same directory as ``./data`` and execute  ``python main.py``.
 
