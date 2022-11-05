@@ -11,7 +11,7 @@ pygame.init()
 # set the display
 Display.set_caption('Flappuccino')
 Display.set_icon(Bean().sprite)
-DISPLAY=Display.set_mode((640,480),0,32)
+DISPLAY=Display.set_mode((640,480),pygame.RESIZABLE | pygame.SCALED,32)
 player = Player()
 # get fonts
 font = pygame.font.Font('data/fonts/font.otf', 100)
