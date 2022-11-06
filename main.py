@@ -35,9 +35,10 @@ indicators = ['data/gfx/flap_indicator.png', 'data/gfx/speed_indicator.png', 'da
 WHITE=(255,255,255) # constant
 
 def start():
-    global beanMultiplier, beans, buttons, last_time, clicked, jump, dt, mouseX, mouseY
+    global beanMultiplier, beans, buttons, last_time, clicked, jump, dt, mouseX, mouseY, scroll
     last_time = time.time()
     clicked = jump = False
+    scroll = True
     dt = 0
     beanMultiplier = 5
     beans = []
@@ -55,13 +56,16 @@ def start():
 
 def funcOne(toggle = True):
     global dt, last_time, mouseX, mouseY, clicked, keys, jump
+    # calculate the change in time (dt)
     dt = (time.time() - last_time) * 60
+    # save the current time
     last_time = time.time()
-    # get the position of the mouse
     if(toggle):
+        # resetting clicked and jump flags to false
+        clicked = jump = False
+        # get the position of the mouse
         mouseX,mouseY = pygame.mouse.get_pos()  
         # getting the keys pressed
-        clicked = jump = False
         keys = pygame.key.get_pressed()
     eventHandler()
 
@@ -79,11 +83,11 @@ def eventHandler():
             sys.exit()
 
 def main():
-    global clicked, jump, mouseY, dt, mouseX, keys, beanMultiplier, beans, buttons
+    global clicked, jump, mouseY, dt, mouseX, keys, beanMultiplier, beans, buttons, scroll
     start()
     # creating a list of backgrounds, with each index being an object
     bg = [Background(), Background(), Background()]
-    # some variables that we need
+    # startingHeight = 100 (the initial y position of the player)
     startingHeight = player.position.y
     splashScreenTimer = 0
     #splash screen
@@ -107,8 +111,8 @@ def main():
         # so the user clicked, and by any change the mouse's position was on the buttons
         if (clicked and checkCollisions(mouseX, mouseY, 3, 3, DISPLAY.get_width()/2 - retry_button.get_width()/2, 288, retry_button.get_width(), retry_button.get_height())):
             clicked = False
-            Sound.play(upgradefx)
             titleScreen = False
+            Sound.play(upgradefx)
 
         DISPLAY.fill(WHITE)
         DISPLAY.blit(title_bg, (0,0)) 
@@ -125,16 +129,21 @@ def main():
     while True:
         funcOne()
         
-        camOffset = -player.position.y + DISPLAY.get_height()/2 - player.currentSprite.get_size()[1]/2
+        camOffset = -player.position.y + (DISPLAY.get_height() - player.currentSprite.get_size()[1])/2
+        if(camOffset <= 0):
+            if(not player.dead):
+                player.kill(deadfx)
+            scroll = False
+            camOffset = 0
         
         DISPLAY.fill(WHITE)
         for o in bg:
             o.setSprite(((player.position.y/50) % 100) / 100)
             DISPLAY.blit(o.sprite, (0, o.position))
-
         color = colorsys.hsv_to_rgb(((player.position.y/50) % 100) / 100,0.5,0.5)
         currentHeightMarker = font.render(str(player.height), True, (color[0]*255, color[1]*255, color[2]*255, 50 ))
         DISPLAY.blit(currentHeightMarker, (DISPLAY.get_width()/2 - currentHeightMarker.get_width()/2, camOffset + round((player.position.y - startingHeight)/DISPLAY.get_height())*DISPLAY.get_height() + player.currentSprite.get_height() - 40))
+        
         
         for bean in beans:
             DISPLAY.blit(bean.sprite, (bean.position.x, bean.position.y + camOffset))
@@ -158,21 +167,21 @@ def main():
             deathMessage = font_small.render("RETRY", True, (0, 0, 0))
             DISPLAY.blit(deathMessage, (24, 8))
         
-        player.set_height(round(-(player.position.y - startingHeight)/DISPLAY.get_height()))
- 
-        player.position.x += player.velocity.x*dt
-        if player.position.x < 0 or player.position.x + player.currentSprite.get_size()[0] > 640:
-            player.flip()
-        if jump and not player.dead:
-            player.velocity.y = -player.flapForce
-            Sound.play(flapfx)
-        player.position.y += player.velocity.y*dt
-        player.velocity.y = clamp(player.velocity.y + player.acceleration*dt, -99999999999, 50)
+        if(scroll):
+            player.set_height(round(-(player.position.y - startingHeight)/DISPLAY.get_height()))
+            player.position.x += player.velocity.x*dt
+            if player.position.x < 0 or player.position.x + player.currentSprite.get_size()[0] > 640:
+                player.flip()
+            if jump and not player.dead:
+                player.velocity.y = -player.flapForce
+                Sound.play(flapfx)
+            player.position.y += player.velocity.y*dt
+            player.velocity.y = clamp(player.velocity.y + player.acceleration*dt, -99999999999, 50)
 
-        player.health -= 0.2*dt
-        if player.health <= 0 and not player.dead:
-            player.kill(deadfx)
-            
+        if not player.dead:
+            player.health -= 0.2*dt
+            if player.health <= 0:
+                player.kill(deadfx)
 
         for bean in beans:
             if bean.position.y + camOffset + 90 > DISPLAY.get_height():
@@ -197,7 +206,7 @@ def main():
                     if (button.index == 1):
                         player.velocity.x *= 1.5
                     if (button.index == 2):
-                        beanMultiplier += 10
+                        beanMultiplier += 5
                         for _ in range(beanMultiplier):
                             beans.append(Bean(random.randrange(0, DISPLAY.get_width() - Bean().sprite.get_width()), player.position.y - DISPLAY.get_height() - random.randrange(0, 200)))
         
