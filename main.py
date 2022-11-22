@@ -1,6 +1,8 @@
 import pygame, sys, time, random, colorsys, math, pygame.display as Display
 from pygame.locals import *
 from pygame.mixer import Sound
+from pygame.font import Font
+from pygame.image import load as Image
 from player import Player
 from background import Background
 from button import Button
@@ -11,31 +13,14 @@ pygame.init()
 # set the display
 Display.set_caption('Flappuccino')
 Display.set_icon(Bean().sprite)
-DISPLAY=Display.set_mode((640,480),pygame.RESIZABLE | pygame.SCALED,32)
+DISPLAY = Display.set_mode((640,480),pygame.RESIZABLE | pygame.SCALED,32)
 player = Player()
-# get fonts
-font = pygame.font.Font('data/fonts/font.otf', 100)
-font_small = pygame.font.Font('data/fonts/font.otf', 32)
-font_20 = pygame.font.Font('data/fonts/font.otf', 20)
-# get some images
-shop = pygame.image.load('data/gfx/shop.png')
-shop_bg = pygame.image.load('data/gfx/shop_bg.png')
-retry_button = pygame.image.load('data/gfx/retry_button.png')
-logo = pygame.image.load('data/gfx/logo.png')
-title_bg = pygame.image.load('data/gfx/bg.png')
-title_bg.fill((255, 30.599999999999998, 0.0), special_flags=pygame.BLEND_ADD)
-shadow = pygame.image.load('data/gfx/shadow.png')
 # get sounds
 flapfx = Sound("data/sfx/flap.wav")
-upgradefx = Sound("data/sfx/upgrade.wav")
-beanfx = Sound("data/sfx/bean.wav")
-deadfx = Sound("data/sfx/dead.wav")
-indicators = ['data/gfx/flap_indicator.png', 'data/gfx/speed_indicator.png', 'data/gfx/beanup_indicator.png']
-# colors
-WHITE=(255,255,255) # constant
 
 def start():
     global beanMultiplier, beans, buttons, last_time, clicked, jump, dt, mouseX, mouseY, scroll
+    indicators = ['data/gfx/flap_indicator.png', 'data/gfx/speed_indicator.png', 'data/gfx/beanup_indicator.png']
     last_time = time.time()
     clicked = jump = False
     scroll = True
@@ -85,6 +70,23 @@ def eventHandler():
 def main():
     global clicked, jump, mouseY, dt, mouseX, keys, beanMultiplier, beans, buttons, scroll
     start()
+    # get fonts
+    font = Font('data/fonts/font.otf', 100)
+    font_small = Font('data/fonts/font.otf', 32)
+    font_20 = Font('data/fonts/font.otf', 20)
+    # get some images
+    shop = Image('data/gfx/shop.png')
+    shop_bg = Image('data/gfx/shop_bg.png')
+    retry_button = Image('data/gfx/retry_button.png')
+    logo = Image('data/gfx/logo.png')
+    title_bg = Image('data/gfx/bg.png')
+    title_bg.fill((255, 30.599999999999998, 0.0), special_flags=pygame.BLEND_ADD)
+    shadow = Image('data/gfx/shadow.png')
+    upgradefx = Sound("data/sfx/upgrade.wav")
+    beanfx = Sound("data/sfx/bean.wav")
+    deadfx = Sound("data/sfx/dead.wav")
+    # colors
+    WHITE=(255,255,255) # constant
     # creating a list of backgrounds, with each index being an object
     bg = [Background(), Background(), Background()]
     # startingHeight = 100 (the initial y position of the player)
@@ -157,7 +159,7 @@ def main():
             DISPLAY.blit(button.sprite, (220 + (button.index*125), 393))
             priceDisplay = font_small.render(str(button.price), True, (0,0,0))
             DISPLAY.blit(priceDisplay, (262 + (button.index*125), 408))
-            levelDisplay = font_20.render('Lvl. ' + str(button.level), True, (200,200,200))
+            levelDisplay = font_20.render(f'Lvl. {button.level}', True, (200,200,200))
             DISPLAY.blit(levelDisplay, (234 + (button.index*125), 441))
             DISPLAY.blit(button.typeIndicatorSprite, (202 + (button.index*125), 377))
         beanCountDisplay = font_small.render(str(player.beanCount).zfill(7), True, (0,0,0))
