@@ -18,35 +18,35 @@ from utils import *
 pygame.init()
 # set the display
 Display.set_caption('Flappuccino')
-Display.set_icon(Bean().sprite)
+Display.set_icon(Bean.sprite)
 DISPLAY = Display.set_mode((640,480),pygame.RESIZABLE | pygame.SCALED,32)
 player = Player()
 # get sounds
 flapfx = Sound("data/sfx/flap.wav")
+indicators = ['data/gfx/flap_indicator.png', 'data/gfx/speed_indicator.png', 'data/gfx/beanup_indicator.png']
 
 def start():
     global bean_multiplier, beans, buttons, last_time, clicked, jump, dt, mouse_x, mouse_y, scroll
-    indicators = ['data/gfx/flap_indicator.png', 'data/gfx/speed_indicator.png', 'data/gfx/beanup_indicator.png']
     last_time = time.time()
     clicked = False
     jump = False
     scroll = True
     dt = 0
     bean_multiplier = 5
-    beans = []
-    buttons = []
+    beans = list[Bean]
+    buttons = list[Button]
     mouse_x, mouse_y = pygame.mouse.get_pos()
     player.reset()
     # adding three buttons
     for i in range(3):
         buttons.append(Button(i, indicators[i]))
-    buttons[2].set_price(30) 
+    buttons[2].set_price(30)
     # getting 5 beans
     for i in range(5):
         beans.append(Bean(random.randrange(0, DISPLAY.get_width() - Bean().sprite.get_width()) ,i*-200 - player.position.y))
     Sound.play(flapfx)
 
-def func_one(toggle = True):
+def func_one(toggle: bool = True) -> None:
     global dt, last_time, mouse_x, mouse_y, clicked, keys, jump
     # calculate the change in time (dt)
     dt = (time.time() - last_time) * 60
@@ -54,14 +54,15 @@ def func_one(toggle = True):
     last_time = time.time()
     if(toggle):
         # resetting clicked and jump flags to false
-        clicked = jump = False
+        clicked = False
+        jump = False
         # get the position of the mouse
         mouse_x, mouse_y = pygame.mouse.get_pos()  
         # getting the keys pressed
         keys = pygame.key.get_pressed()
     event_handler()
 
-def event_handler():
+def event_handler() -> None:
     global jump, clicked
     for event in pygame.event.get():
         if event.type==pygame.KEYDOWN and event.key==K_SPACE:
@@ -74,8 +75,8 @@ def event_handler():
             pygame.quit()
             sys.exit()
 
-def main():
-    global clicked, jump, mouse_y, dt, mouse_x, keys, bean_multiplier, beans, buttons, scroll
+def main() -> None:
+    global clicked, bean_multiplier, beans, scroll
     start()
     # get fonts
     font = Font('data/fonts/font.otf', 100)

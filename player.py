@@ -18,17 +18,17 @@ class Player:
         self.rot_offset = -5
         self.current_sprite = self.right_sprite
     
-    def reset(self):
+    def reset(self) -> None:
         self.__init__()
     
-    def kill(self, sound):
+    def kill(self, sound: str) -> None:
         self.dead = True
         pygame.mixer.Sound.play(sound)
         
-    def set_height(self, new_height):
+    def set_height(self, new_height: float) -> None:
         self.height = new_height
         
-    def flip(self):
+    def flip(self) -> None:
         self.velocity.x *= -1
         self.rot_offset *= -1
         if self.current_sprite == self.right_sprite:
