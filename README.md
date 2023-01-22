@@ -14,12 +14,18 @@ A Windows build of the game is available [here](https://polymars.itch.io/flappuc
 Grab the latest release of Python from [here](https://www.python.org/downloads/) **and** install Pygame by executing ``pip install pygame``.
 
 **Note:** If the ``pip install pygame`` did not work for you, then try this:
-1. Windows:
+1. Windows or Linux:
 ``python -m pip install pygame``
 2. Mac: 
 ``python3 -m pip install pygame``
-3. Linux:
-Same as windows.
+3. Browser
+```sh
+pip install pygbag
+cd ..
+pygbag Flappuccino
+```
+Then 
+http://localhost:8000
 
 Ensure ``main.py`` is in the same directory as ``./data`` and execute  ``python main.py``.
 

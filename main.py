@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# Tells Unix operating systems to run with Python3 when it gets executed
+
 import pygame
 import sys
 import time
@@ -5,6 +8,7 @@ import random
 import colorsys
 import math
 import pygame.display as Display
+import asyncio
 from pygame.locals import *
 from pygame.mixer import Sound
 from pygame.font import Font
@@ -40,11 +44,15 @@ title_bg.fill((255, 30.599999999999998, 0.0), special_flags=pygame.BLEND_ADD)
 shadow = Image('data/gfx/shadow.png')
 indicators = ['data/gfx/flap_indicator.png', 'data/gfx/speed_indicator.png', 'data/gfx/beanup_indicator.png']
 
-# get some sounds
-upgradefx = Sound("data/sfx/upgrade.wav")
-beanfx = Sound("data/sfx/bean.wav")
-deadfx = Sound("data/sfx/dead.wav")
-flapfx = Sound("data/sfx/flap.wav")
+# sounds
+if ['win64','win32','win','linux'].__contains__(sys.platform):
+    sound_ext = '.wav'
+else:
+    sound_ext = '-pybag.ogg'
+flapfx = pygame.mixer.Sound("data/sfx/flap" + sound_ext)
+upgradefx = pygame.mixer.Sound("data/sfx/upgrade" + sound_ext)
+beanfx = pygame.mixer.Sound("data/sfx/bean" + sound_ext)
+deadfx = pygame.mixer.Sound("data/sfx/dead" + sound_ext)
 
 # colors
 WHITE=(255,255,255) # constant
@@ -57,8 +65,8 @@ def start():
     scroll = True
     dt = 0
     bean_multiplier = 5
-    beans = list[Bean]
-    buttons = list[Button]
+    beans = []
+    buttons = []
     mouse_x, mouse_y = pygame.mouse.get_pos()
     player.reset()
     # adding three buttons
@@ -71,7 +79,7 @@ def start():
     Sound.play(flapfx)
 
 def func_one(toggle: bool = True) -> None:
-    global dt, last_time, mouse_x, mouse_y, clicked, keys, jump
+    global dt, last_time, mouse_x, mouse_y, clicked, jump
     # calculate the change in time (dt)
     dt = (time.time() - last_time) * 60
     # save the current time
@@ -81,9 +89,7 @@ def func_one(toggle: bool = True) -> None:
         clicked = False
         jump = False
         # get the position of the mouse
-        mouse_x, mouse_y = pygame.mouse.get_pos()  
-        # getting the keys pressed
-        keys = pygame.key.get_pressed()
+        mouse_x, mouse_y = pygame.mouse.get_pos()
     event_handler()
 
 def event_handler() -> None:
@@ -99,7 +105,7 @@ def event_handler() -> None:
             pygame.quit()
             sys.exit()
 
-def main() -> None:
+async def main() -> None:
     global clicked, bean_multiplier, beans, scroll
     start()
     
@@ -119,6 +125,7 @@ def main() -> None:
         DISPLAY.blit(start_message, (DISPLAY.get_width()/2 - start_message.get_width()/2, DISPLAY.get_height()/2 - start_message.get_height()/2))
         # update display
         Display.update()
+        await asyncio.sleep(0)
         # wait for 10 seconds
         pygame.time.delay(10)
     
@@ -142,6 +149,7 @@ def main() -> None:
         DISPLAY.blit(start_message, (DISPLAY.get_width()/2 - start_message.get_width()/2, 292))
 
         Display.update()
+        await asyncio.sleep(0)
         pygame.time.delay(10)
 
     # the main game loop
@@ -157,7 +165,7 @@ def main() -> None:
         
         DISPLAY.fill(WHITE)
         for o in bg:
-            o.setSprite(((player.position.y/50) % 100) / 100)
+            o.set_sprite(((player.position.y/50) % 100) / 100)
             DISPLAY.blit(o.sprite, (0, o.position))
         color = colorsys.hsv_to_rgb(((player.position.y/50) % 100) / 100,0.5,0.5)
         current_height_marker = font.render(str(player.height), True, (color[0]*255, color[1]*255, color[2]*255, 50 ))
@@ -238,7 +246,8 @@ def main() -> None:
         bg[2].position = bg[0].position - DISPLAY.get_height()
         
         Display.update()
+        await asyncio.sleep(0)
         pygame.time.delay(10)
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
