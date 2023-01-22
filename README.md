@@ -28,6 +28,7 @@ Then
 http://localhost:8000
 
 Ensure ``main.py`` is in the same directory as ``./data`` and execute  ``python main.py``.
+**Note:** If python does not work, try python3, py, or py3.
 
 ## Contributing
 Pull requests are welcome! For major refactors, please open an issue first to discuss what you would like to improve. Feel free to create a fork of this repository and use the code for any noncommercial purposes.
